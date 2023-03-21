@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema
+model Rating {
+  id    Int     @id @default(autoincrement())
+  mark  Int
+  review  String?
+  Collector   Collector? @relation(fields: [collectorId], references: [id])
+  collectorId Int?
+}
+
+model Collector {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type     String?
+  teaser   String?
+  published Boolean? @default(false)
+  ratings Rating[]
+  Favorite Favorite[]
+
+}
+
+model Favorite {
+  id    Int     @id @default(autoincrement())
+  Collector   Collector? @relation(fields: [collectorId], references: [id])
+  collectorId Int?
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  username String?
+  password String
+  email    String
+  
+}
