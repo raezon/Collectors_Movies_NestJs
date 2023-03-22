@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Collector, Rating } from '@prisma/client';
 import { PrismaService } from 'src/libraries/prisma/prisma.service';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
@@ -6,43 +7,27 @@ import { UpdateRatingDto } from './dto/update-rating.dto';
 @Injectable()
 export class RatingService {
   constructor(private prisma: PrismaService) {}
+  async findTopFive(argument) {
+    // All posts with ratings data
+    const collectors = await this.prisma.$queryRawUnsafe(`
 
-  findAll() {
-    return this.prisma.rating.findMany();
-  }
+SELECT DISTINCT  c.id, c.name, c.type, c.teaser, r.avg_marks
+    FROM "public"."Collector" c
+    inner join
+    (
+        select  "collectorId", avg("mark") AS avg_marks
+        from "public"."Rating"
+        group by "public"."Rating"."collectorId"
+        ORDER BY avg_marks desc
+    ) as r
+        on c.id = r."collectorId"
+        where type = '${argument.type}'
+        ORDER BY avg_marks desc
+        LIMIT 5
+    
+    `);
 
-  findOne(id: number) {
-    const rating = this.prisma.rating.findUnique({
-      where: { id },
-    });
-
-    if (!rating) {
-      throw new NotFoundException(`Rating #${id} not found`);
-    }
-
-    return rating;
-  }
-
-  create(createRatingDto: CreateRatingDto) {
-    return this.prisma.rating.create({ data: createRatingDto });
-  }
-
-  update(id: number, updateRatingDto: UpdateRatingDto) {
-    return this.prisma.rating.update({
-      where: {
-        id,
-      },
-      data: {
-        ...updateRatingDto,
-      },
-    });
-  }
-
-  remove(id: number) {
-    return this.prisma.rating.delete({
-      where: {
-        id,
-      },
-    });
+    /**     */
+    return collectors;
   }
 }

@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiSecurity,
   ApiTags,
@@ -69,8 +71,18 @@ export class CollectorController {
 
   @Get()
   @ApiSecurity('Bearer')
-  findAll() {
-    return this.collectorService.findAll();
+  search() {
+    //return this.collectorService.findAll();
+  }
+
+  @Get('/all')
+  @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary: 'Get all collectors you may filter them by type',
+  })
+  @ApiParam({ name: 'type', type: String })
+  findAll(@Query() params) {
+    return this.collectorService.findAll(params);
   }
 
   @Get(':id')

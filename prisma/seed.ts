@@ -185,6 +185,16 @@ async function main() {
           collectorId: 12,
           mark: 6.5,
         },
+        {
+          id: 16,
+          collectorId: 1,
+          mark: 5,
+        },
+        {
+          id: 17,
+          collectorId: 1,
+          mark: 2,
+        },
       ],
     })
     .then(() => {

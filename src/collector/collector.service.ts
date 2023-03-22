@@ -7,8 +7,10 @@ import { UpdateCollectorDto } from './dto/update-collector.dto';
 export class CollectorService {
   constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.collector.findMany();
+  findAll(params) {
+    const data = this.prisma.collector.findMany({ where: params });
+    console.log(params);
+    return data;
   }
 
   findOne(id: number) {

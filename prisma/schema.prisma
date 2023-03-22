@@ -13,7 +13,7 @@ datasource db {
 // schema
 model Rating {
   id    Int     @id @default(autoincrement())
-  mark  Int
+  mark  Float
   review  String?
   Collector   Collector? @relation(fields: [collectorId], references: [id])
   collectorId Int?
