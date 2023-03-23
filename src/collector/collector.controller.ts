@@ -13,6 +13,7 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiSecurity,
   ApiTags,
@@ -20,6 +21,11 @@ import {
 import { CollectorService } from './collector.service';
 import { CreateCollectorDto } from './dto/create-collector.dto';
 import { UpdateCollectorDto } from './dto/update-collector.dto';
+
+enum Collector {
+  movie = 'movie',
+  serie = 'serie',
+}
 
 @ApiTags('Collector')
 @Controller('collector')
@@ -69,18 +75,24 @@ export class CollectorController {
     return this.collectorService.create(createCollectorDto);
   }
 
-  @Get()
+  @Get('/search')
   @ApiSecurity('Bearer')
-  search() {
-    //return this.collectorService.findAll();
+  @ApiOperation({
+    summary: 'Search on various collector by name',
+  })
+  @ApiParam({ name: 'name', type: String, required: false })
+  search(@Param('name') name) {
+    console.log('xFDF');
+    return this.collectorService.findAll(name);
   }
 
   @Get('/all')
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Get all collectors you may filter them by type',
+    summary: 'Get all collectors you may filter them by type (movie or serie)',
   })
-  @ApiParam({ name: 'type', type: String })
+  // @ApiParam({ name: 'type', type: String, required: false })
+  @ApiQuery({ name: 'type', enum: Collector })
   findAll(@Query() params) {
     return this.collectorService.findAll(params);
   }
