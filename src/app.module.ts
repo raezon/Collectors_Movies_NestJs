@@ -12,7 +12,6 @@ import { RatingModule } from './rating/rating.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    UsersModule,
     IamModule,
     FavoriteModule,
     CollectorModule,
