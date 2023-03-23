@@ -8,8 +8,19 @@ export class CollectorService {
   constructor(private prisma: PrismaService) {}
 
   findAll(params) {
-    const data = this.prisma.collector.findMany({ where: params });
     console.log(params);
+    const data = this.prisma.collector.findMany({ where: { ...params } });
+    console.log(params);
+    return data;
+  }
+  search(value) {
+    const data = this.prisma.collector.findMany({
+      where: {
+        name: {
+          contains: value,
+        },
+      },
+    });
     return data;
   }
 

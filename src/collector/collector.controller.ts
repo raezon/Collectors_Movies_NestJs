@@ -80,10 +80,9 @@ export class CollectorController {
   @ApiOperation({
     summary: 'Search on various collector by name',
   })
-  @ApiParam({ name: 'name', type: String, required: false })
-  search(@Param('name') name) {
-    console.log('xFDF');
-    return this.collectorService.findAll(name);
+  @ApiQuery({ name: 'name' })
+  search(@Query('name') name) {
+    return this.collectorService.search(name);
   }
 
   @Get('/all')
