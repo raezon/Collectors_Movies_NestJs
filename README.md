@@ -44,6 +44,17 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+## Deployment
+```
+https://api.raezoninformatics.com
+
+```
+## Documentation
+```
+https://api.raezoninformatics.com/api
+
+```
+
 
 ## Test
 
