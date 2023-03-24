@@ -62,6 +62,10 @@ export class FavoriteController {
 
   @Get()
   @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary:
+      'Get all my personal favorite i will not get other people favorite',
+  })
   findAll(@Req() request) {
     const userId = request.user.sub;
     return this.favoriteService.findAll({ userId });
@@ -69,26 +73,23 @@ export class FavoriteController {
 
   @Get(':id')
   @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary:
+      'Get a detail of  favorite  by id ,i will not get other people favorite',
+  })
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.sub;
     return this.favoriteService.findOne(+id, userId);
   }
 
-  @Patch(':id')
-  @ApiSecurity('Bearer')
-  update(
-    @Param('id') id: string,
-    @Body() updateFavoriteDto: UpdateFavoriteDto,
-    @Req() request,
-  ) {
-    const userId = request.user.sub;
-    return this.favoriteService.update(+id, updateFavoriteDto, userId);
-  }
-
   @Delete(':id')
+  @ApiOperation({
+    summary:
+      'Delete a collector from my favorite, i will not remove only from my favorite',
+  })
   @ApiSecurity('Bearer')
   remove(@Param('id') id: string, @Req() request) {
     const userId = request.user.sub;
-    return this.favoriteService.remove(+id);
+    return this.favoriteService.remove(+id, userId);
   }
 }
