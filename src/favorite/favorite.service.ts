@@ -7,13 +7,16 @@ import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 export class FavoriteService {
   constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.favorite.findMany();
+  findAll(params) {
+    return this.prisma.favorite.findMany({ where: { ...params } });
   }
 
-  findOne(id: number) {
-    const favorite = this.prisma.favorite.findUnique({
-      where: { id },
+  findOne(id: number, userId: number) {
+    const favorite = this.prisma.favorite.findFirst({
+      where: { id, userId },
+      include: {
+        User: true,
+      },
     });
 
     if (!favorite) {
@@ -23,11 +26,23 @@ export class FavoriteService {
     return favorite;
   }
 
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return this.prisma.favorite.create({ data: createFavoriteDto });
+  create(createFavoriteDto: CreateFavoriteDto, userId) {
+    console.log({ ...createFavoriteDto, userId });
+    return this.prisma.favorite.create({
+      data: { ...createFavoriteDto, userId },
+    });
   }
 
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
+  update(id: number, updateFavoriteDto: UpdateFavoriteDto, userId) {
+    const isMe = this.prisma.favorite.findFirst({
+      where: { id, userId },
+    });
+
+    if (!isMe) {
+      throw new NotFoundException(
+        `You can not update this favorite is not yours`,
+      );
+    }
     return this.prisma.favorite.update({
       where: {
         id,
@@ -38,7 +53,16 @@ export class FavoriteService {
     });
   }
 
-  remove(id: number) {
+  remove(id: number, userId) {
+    const isMe = this.prisma.favorite.findFirst({
+      where: { id, userId },
+    });
+
+    if (!isMe) {
+      throw new NotFoundException(
+        `You can not delete this favorite is not yours`,
+      );
+    }
     return this.prisma.favorite.delete({
       where: {
         id,

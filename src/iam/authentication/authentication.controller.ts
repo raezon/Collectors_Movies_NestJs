@@ -20,10 +20,10 @@ export class AuthenticationController {
     schema: {
       type: 'object',
       properties: {
-        email: {
+        username: {
           type: 'string',
-          example: 'amardjebabla10@gmail.com',
-          description: 'this is an email',
+          example: 'amardjebabla10',
+          description: 'this is a username',
         },
         password: {
           type: 'integer',
@@ -57,10 +57,10 @@ export class AuthenticationController {
     schema: {
       type: 'object',
       properties: {
-        email: {
+        username: {
           type: 'string',
-          example: 'amardjebabla10@gmail.com',
-          description: 'this is an email',
+          example: 'amardjebabla10',
+          description: 'this is a username',
         },
         password: {
           type: 'integer',

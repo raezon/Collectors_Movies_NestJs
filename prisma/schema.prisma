@@ -34,13 +34,15 @@ model Favorite {
   id    Int     @id @default(autoincrement())
   Collector   Collector? @relation(fields: [collectorId], references: [id])
   collectorId Int?
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 
 model User {
   id Int @id @default(autoincrement())
-  username String?
+  username String
   password String
-  email    String
+  Favorite Favorite[]
   
 }

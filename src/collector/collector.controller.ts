@@ -91,7 +91,7 @@ export class CollectorController {
     summary: 'Get all collectors you may filter them by type (movie or serie)',
   })
   // @ApiParam({ name: 'type', type: String, required: false })
-  @ApiQuery({ name: 'type', enum: Collector })
+  @ApiQuery({ name: 'type', enum: Collector, required: false })
   findAll(@Query() params) {
     return this.collectorService.findAll(params);
   }

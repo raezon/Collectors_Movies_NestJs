@@ -106,7 +106,7 @@ async function main() {
     .catch((err) => {
       console.log(err);
     });
-  //collector
+  //rating
   await prisma.rating
     .createMany({
       data: [

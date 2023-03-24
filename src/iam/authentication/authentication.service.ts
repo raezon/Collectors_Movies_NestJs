@@ -23,7 +23,7 @@ export class AuthenticationService {
   async signUp(signUpDto: SignUpDto) {
     try {
       const user = new User();
-      user.email = signUpDto.email;
+      user.username = signUpDto.username;
       user.password = await this.hashingService.hash(signUpDto.password);
 
       await this.prisma.user.create({ data: user });
@@ -37,9 +37,9 @@ export class AuthenticationService {
   }
 
   async signIn(signInDto: SignInDto) {
-    const email = signInDto.email;
+    const username = signInDto.username;
     const user = await this.prisma.user.findFirst({
-      where: { email },
+      where: { username },
     });
     if (!user) {
       throw new UnauthorizedException('User does not exists');
@@ -55,7 +55,7 @@ export class AuthenticationService {
       // 👈
       {
         sub: user.id,
-        email: user.email,
+        username: user.username,
       },
     );
     return {
