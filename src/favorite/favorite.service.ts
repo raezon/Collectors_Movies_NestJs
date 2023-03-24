@@ -38,7 +38,6 @@ export class FavoriteService {
   }
 
   create(createFavoriteDto: CreateFavoriteDto, userId) {
-    console.log({ ...createFavoriteDto, userId });
     return this.prisma.favorite.create({
       data: { ...createFavoriteDto, userId },
     });

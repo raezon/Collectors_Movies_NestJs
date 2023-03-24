@@ -92,6 +92,8 @@ export class CollectorController {
   })
   // @ApiParam({ name: 'type', type: String, required: false })
   @ApiQuery({ name: 'type', enum: Collector, required: false })
+  @ApiQuery({ name: 'skip', required: false })
+  @ApiQuery({ name: 'take', required: false })
   findAll(@Query() params) {
     return this.collectorService.findAll(params);
   }
