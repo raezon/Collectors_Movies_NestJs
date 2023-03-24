@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Patch,
+  Query,
   Param,
   Delete,
   Req,
@@ -15,10 +16,16 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
+
+enum Collector {
+  movie = 'movie',
+  serie = 'serie',
+}
 
 @ApiTags('Favorite')
 @Controller('favorite')
@@ -66,9 +73,10 @@ export class FavoriteController {
     summary:
       'Get all my personal favorite i will not get other people favorite',
   })
-  findAll(@Req() request) {
+  @ApiQuery({ name: 'type', enum: Collector, required: false })
+  findAll(@Req() request, @Query('type') type) {
     const userId = request.user.sub;
-    return this.favoriteService.findAll({ userId });
+    return this.favoriteService.findAll({ userId }, type);
   }
 
   @Get(':id')

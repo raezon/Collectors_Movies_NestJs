@@ -7,8 +7,19 @@ import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 export class FavoriteService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(params) {
-    return this.prisma.favorite.findMany({ where: { ...params } });
+  findAll(params, type) {
+    let otherRestrictions = {};
+    if (type) {
+      otherRestrictions = {
+        Collector: {
+          type,
+        },
+      };
+    }
+    return this.prisma.favorite.findMany({
+      where: { ...params, ...otherRestrictions },
+      include: { Collector: true },
+    });
   }
 
   findOne(id: number, userId: number) {
