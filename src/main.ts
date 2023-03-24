@@ -11,7 +11,14 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('collector application')
     .setDescription(
-      'This api is related to the mangement of a small store of collector type movie or serie ,the api include severall operation like search,add to favorite,...',
+      `This api is related to the mangement of a small store of collector type movie or serie ,the api include severall operation like
+
+      - Authentication modules that has a signUp and signIn methods.
+      - Favorite module to manage favorite collector .
+      - Collector module to get collector by type,search a collector by name,get top five collector or movies best noted.
+
+      Plus you will find a summary operation for each method,example of body or query.
+      `,
     )
     .setVersion('1.0')
     .addTag('collectors')
