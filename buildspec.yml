@@ -1,4 +1,7 @@
 version: 0.2
+env:
+  variables:
+    CURRENT_ENVIRONMENT: $BRANCH_NAME
 phases:
   install:
     runtime-versions:
@@ -14,7 +17,9 @@ phases:
       - echo Compiling the Node.js code
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Creating branch txt that will be used for appspec.yml for the creation of environement variable stored on system manager ...
+      - echo "${BRANCH_NAME}" >> envfile
 artifacts:
   files:
+    - envfile
     - '**/*'
