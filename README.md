@@ -55,6 +55,11 @@ https://api.raezoninformatics.com/api
 
 ```
 
+## Configure ssl check this github repo
+```
+https://github.com/saasscaleup/nodejs-ssl-server
+```
+
 
 ## Test
 
