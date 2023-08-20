@@ -55,8 +55,9 @@ https://api.raezoninformatics.com/api
 
 ```
 
-## Configure ssl check this github repo
+## Configure ssl check this github repo and youtube video
 ```
+https://www.youtube.com/watch?v=yhiuV6cqkNs&t=203s
 https://github.com/saasscaleup/nodejs-ssl-server
 ```
 
