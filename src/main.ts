@@ -9,7 +9,7 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('collector application')
+    .setTitle('test application')
     .setDescription(
       `This api is related to the mangement of a small store of collector type movie or serie ,the api include severall operation 
       
